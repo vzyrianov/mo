@@ -1,3 +1,6 @@
+#ifndef MO_LIB
+#define MO_LIB
+
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -27,3 +30,5 @@ long long TAKE(node_parameter* param);
 void write_to_one(write_head* param, long long data);
 
 void PUSH(node_parameter* param, long long data);
+
+#endif
