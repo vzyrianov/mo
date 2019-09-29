@@ -31,11 +31,11 @@ void respond(node_parameter* param)
 
       rcvd=recv(client, mesg, 99999, 0);
 
-      if (rcvd<0)    // receive error
+      if (rcvd<0)    
          fprintf(stderr,("recv() error\n"));
-      else if (rcvd==0)    // receive socket closed
+      else if (rcvd==0)    
          fprintf(stderr,"Client disconnected upexpectedly.\n");
-      else    // message received
+      else    
       {
          printf("%s", mesg);
          reqline[0] = strtok (mesg, " \t\n");
@@ -50,24 +50,24 @@ void respond(node_parameter* param)
             else
             {
                if ( strncmp(reqline[1], "/\0", 2)==0 )
-                  reqline[1] = "/index.html";        //Because if no file is specified, index.html will be opened by default (like it happens in APACHE...
+                  reqline[1] = "/index.html";
 
                strcpy(path, ROOT);
                strcpy(&path[strlen(ROOT)], reqline[1]);
                printf("file: %s\n", path);
 
-               if ( (fd=open(path, O_RDONLY))!=-1 )    //FILE FOUND
+               if ( (fd=open(path, O_RDONLY))!=-1 )
                {
                   send(client, "HTTP/1.0 200 OK\n\n", 17, 0);
                   while ( (bytes_read=read(fd, data_to_send, BYTES))>0 )
                      write (client, data_to_send, bytes_read);
                }
-               else    write(client, "HTTP/1.0 404 Not Found\n", 23); //FILE NOT FOUND
+               else    write(client, "HTTP/1.0 404 Not Found\n", 23);
             }
          }
       }
 
-      shutdown (client, SHUT_RDWR);         //All further send and recieve operations are DISABLED...
+      shutdown (client, SHUT_RDWR);
       close(client);
    }
 }

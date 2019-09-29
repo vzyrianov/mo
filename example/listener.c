@@ -24,7 +24,6 @@ void startServer(char *port)
 {
    struct addrinfo hints, *res, *p;
 
-   // getaddrinfo for host
    memset (&hints, 0, sizeof(hints));
    hints.ai_family = AF_INET;
    hints.ai_socktype = SOCK_STREAM;
@@ -34,7 +33,7 @@ void startServer(char *port)
       perror ("getaddrinfo() error");
       exit(1);
    }
-   // socket and bind
+   
    for (p = res; p!=NULL; p=p->ai_next)
    {
       listenfd = socket (p->ai_family, p->ai_socktype, 0);
@@ -49,7 +48,6 @@ void startServer(char *port)
 
    freeaddrinfo(res);
 
-   // listen for incoming connections
    if ( listen (listenfd, 1000000) != 0 )
    {
       perror("listen() error");
